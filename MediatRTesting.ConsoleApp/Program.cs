@@ -6,6 +6,8 @@ var service = new ServiceCollection();
 
 service.AddLogging();
 
+service.AddScoped<IOrderService, OrderService>();
+
 service.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
@@ -17,7 +19,10 @@ var mediator = provider.GetRequiredService<IMediator>();
 
 Console.WriteLine("MediatR is ready.");
 
-var response = await mediator.Send(new Ping("Hello World"));
-Console.WriteLine(response);
+//var response = await mediator.Send(new Ping("Hello World"));
+//Console.WriteLine(response);
 
 //await mediator.Publish(new UserRegistered(Email: "test@example.com"));
+
+var orderId = await mediator.Send(new CreateOrder("Book"));
+Console.WriteLine($"Created order #{orderId}");
