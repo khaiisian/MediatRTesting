@@ -1,4 +1,5 @@
 using MediatR;
+using MediatRTesting.ConsoleApp;
 using Microsoft.Extensions.DependencyInjection;
 
 var service = new ServiceCollection();
@@ -14,5 +15,7 @@ var provider = service.BuildServiceProvider();
 var mediator = provider.GetRequiredService<IMediator>();
 
 Console.WriteLine("MediatR is ready.");
-var response = await mediator.Send(new Ping("Hello World"));
-Console.WriteLine(response);
+//var response = await mediator.Send(new Ping("Hello World"));
+//Console.WriteLine(response);
+
+await mediator.Publish(new UserRegistered(Email: "test@example.com"));
